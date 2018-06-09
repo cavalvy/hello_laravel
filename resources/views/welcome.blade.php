@@ -79,7 +79,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                    Laravel - {{ getenv('DB_DATABASE') }}
                 </div>
 
                 <div class="links">
