@@ -8350,6 +8350,16 @@ button.close {
   }
 }
 
+/* header */
+
+#logout {
+  cursor: default;
+}
+
+#logout:hover {
+  background-color: transparent;
+}
+
 /* sidebar */
 
 aside section {
@@ -8471,6 +8481,7 @@ footer {
   padding-top: 5px;
   border-top: 1px solid #eaeaea;
   color: #777;
+  /* forms */
 }
 
 footer a {
@@ -8503,5 +8514,21 @@ footer img.brand-icon {
 footer .slogon {
   font-size: 13px;
   font-weight: bold;
+}
+
+footer input,
+footer textarea,
+footer select,
+footer .uneditable-input {
+  border: 1px solid #bbb;
+  margin-bottom: 15px;
+}
+
+footer input {
+  height: auto !important;
+}
+
+footer .panel {
+  margin-top: 50px;
 }
 

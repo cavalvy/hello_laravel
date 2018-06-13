@@ -4,6 +4,15 @@
 
 $navbar-color: #3c3e42;
 
+/* header */
+
+#logout {
+  cursor: default;
+  &:hover {
+    background-color: transparent;
+  }
+}
+
 /* sidebar */
 
 aside {
