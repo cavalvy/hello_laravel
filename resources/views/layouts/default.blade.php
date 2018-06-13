@@ -8,9 +8,11 @@
 <body>
 
 <div class="container">
-    @include('shared._messages')
-    @yield('content')
-    @include('layouts._footer')
+    <div class="col-md-offset-1 col-md-10">
+        @include('shared._messages')
+        @yield('content')
+        @include('layouts._footer')
+    </div>
 </div>
 </body>
 </html>
