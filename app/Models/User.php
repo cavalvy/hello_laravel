@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Notifications\ResetPassword;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Auth;
 
 class User extends Authenticatable
 {
@@ -71,7 +72,56 @@ class User extends Authenticatable
      * 获取当前用户关注的人发布过的所有微博动态
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function feed(){
-        return $this->statuses()->orderBy('created_at','desc');
+    public function feed()
+    {
+        $user_ids = Auth::user()->followings->pluck('id')->toArray();
+        array_push($user_ids,Auth::user()->id);
+        return Status::where('user_id',$user_ids)->with('user')->orderBy('created_at','desc');
+    }
+
+    public function followers()
+    {
+        return $this->belongsToMany(User::class,'followers','user_id','follower_id');
+    }
+
+    public function followings()
+    {
+        return $this->belongsToMany(User::class,'followers','follower_id','user_id');
+    }
+
+    /**
+     * 关注
+     * @param $user_ids
+     * @return array
+     */
+    public function follow($user_ids)
+    {
+        if(!is_array($user_ids)){
+            $user_ids = compact('user_ids');
+        }
+        return $this->followings()->sync($user_ids,false);
+    }
+
+    /**
+     * 取消关注
+     * @param $user_ids
+     * @return int
+     */
+    public function unfollow($user_ids)
+    {
+        if(!is_array($user_ids)){
+            $user_ids = compact('user_ids');
+        }
+        return $this->followings()->detach($user_ids);
+    }
+
+    /**
+     * 是否以关注
+     * @param $user_id
+     * @return mixed
+     */
+    public function isFollowing($user_id)
+    {
+        return $this->followings->contains($user_id);
     }
 }
