@@ -12,7 +12,7 @@ class UsersController extends Controller
 
     public function __construct()
     {
-        //除了指定两个页面不用登录访问外，其他页面未登录访问回重定向到登录页
+        //除了指定页面不用登录访问外，其他页面未登录访问回重定向到登录页
         $this->middleware('auth',[
             'except' => ['index','show','create','store','confirmEmail']
         ]);
@@ -66,17 +66,9 @@ class UsersController extends Controller
 
     public function edit(User $user)
     {
-//        try{
             $this->authorize('update',$user);
 
             return view('users.edit',compact('user'));
-//        }catch(AccessDeniedHttpException $e){
-//            if(config('app.debug')) {
-//                session()->flash('danger', '无权访问：' . $e->getMessage());
-//            } else {
-//                session()->flash('danger', '无权访问');
-//            }
-//        }
     }
 
     /**
