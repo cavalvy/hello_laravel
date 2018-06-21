@@ -60,7 +60,7 @@ class UsersController extends Controller
         ]);
         $this->sendEmailConfirmationTo($user);
         session()->flash('success','验证邮件已发送到你的注册邮箱上，请注意查收。');
-        
+
         return redirect('/');
     }
 
@@ -112,12 +112,16 @@ class UsersController extends Controller
      */
     public function sendEmailConfirmationTo($user)
     {
+        echo '1';
         $view = 'emails.confirm';
         $data = compact('user');
+        echo '2';
         $to = $user->email;
+        echo '3';
         $subject = '感谢注册 Ziv 应用！请确认你的邮箱。';
 
         Mail::send($view,$data,function ($message) use ($to,$subject){
+            echo '4';
             $message->to($to)->subject($subject);
         });
         dd('666');
