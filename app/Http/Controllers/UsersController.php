@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Egulias\EmailValidator\Exception\InvalidEmail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Mail;
@@ -112,16 +113,18 @@ class UsersController extends Controller
      */
     protected function sendEmailConfirmationTo($user)
     {
-        $view = 'emails.confirm';
-        $data = compact('user');
-        $to = $user->email;
-        $subject = "感谢注册 Sample 应用！请确认你的邮箱。";
-        echo $to;
-        Mail::send($view, $data, function ($message) use ($to, $subject) {
-            $message->to($to)->subject($subject);
-        });
-        echo '444';
-        dd('555');
+        try{
+            $view = 'emails.confirm';
+            $data = compact('user');
+            $to = $user->email;
+            $subject = "感谢注册 Sample 应用！请确认你的邮箱。";
+            Mail::send($view, $data, function ($message) use ($to, $subject) {
+                $message->to($to)->subject($subject);
+            });
+        }catch(InvalidEmail $e){
+            dd($e);
+        }
+
     }
 
     /**
