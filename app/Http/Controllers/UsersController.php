@@ -110,21 +110,18 @@ class UsersController extends Controller
      * 发送邮件
      * @param $user
      */
-    public function sendEmailConfirmationTo($user)
+    protected function sendEmailConfirmationTo($user)
     {
-        echo '1';
         $view = 'emails.confirm';
         $data = compact('user');
-        echo '2';
         $to = $user->email;
-        echo '3';
-        $subject = '感谢注册 Ziv 应用！请确认你的邮箱。';
-
-        Mail::send($view,$data,function ($message) use ($to,$subject){
-            echo '4';
+        $subject = "感谢注册 Sample 应用！请确认你的邮箱。";
+        echo $to;
+        Mail::send($view, $data, function ($message) use ($to, $subject) {
             $message->to($to)->subject($subject);
         });
-        dd('666');
+        echo '444';
+        dd('555');
     }
 
     /**
