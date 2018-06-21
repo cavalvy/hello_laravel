@@ -47,7 +47,6 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        dd(redirect('/')->getTargetUrl());
         $this->validate($request,[
             'name' => 'required|max:50',
             'email' => 'required|email|unique:users|max:255',//正对数据库表users
@@ -61,7 +60,7 @@ class UsersController extends Controller
         ]);
         $this->sendEmailConfirmationTo($user);
         session()->flash('success','验证邮件已发送到你的注册邮箱上，请注意查收。');
-
+        
         return redirect('/');
     }
 
@@ -121,6 +120,7 @@ class UsersController extends Controller
         Mail::send($view,$data,function ($message) use ($to,$subject){
             $message->to($to)->subject($subject);
         });
+        dd('666');
     }
 
     /**
