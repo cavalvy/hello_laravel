@@ -76,7 +76,7 @@ class User extends Authenticatable
     {
         $user_ids = Auth::user()->followings->pluck('id')->toArray();
         array_push($user_ids,Auth::user()->id);
-        return Status::where('user_id',$user_ids)->with('user')->orderBy('created_at','desc');
+        return Status::whereIn('user_id',$user_ids)->with('user')->orderBy('created_at','desc');
     }
 
     public function followers()
@@ -99,7 +99,7 @@ class User extends Authenticatable
         if(!is_array($user_ids)){
             $user_ids = compact('user_ids');
         }
-        return $this->followings()->sync($user_ids,false);
+        $this->followings()->sync($user_ids,false);
     }
 
     /**
@@ -112,7 +112,7 @@ class User extends Authenticatable
         if(!is_array($user_ids)){
             $user_ids = compact('user_ids');
         }
-        return $this->followings()->detach($user_ids);
+        $this->followings()->detach($user_ids);
     }
 
     /**

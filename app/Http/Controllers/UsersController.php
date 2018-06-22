@@ -113,7 +113,6 @@ class UsersController extends Controller
      */
     protected function sendEmailConfirmationTo($user)
     {
-        try{
             $view = 'emails.confirm';
             $data = compact('user');
             $to = $user->email;
@@ -121,10 +120,6 @@ class UsersController extends Controller
             Mail::send($view, $data, function ($message) use ($to, $subject) {
                 $message->to($to)->subject($subject);
             });
-        }catch(InvalidEmail $e){
-            dd($e);
-        }
-
     }
 
     /**
